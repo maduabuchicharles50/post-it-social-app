@@ -47,4 +47,19 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// GET A SINGLE USER
+router.get("/:id", async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id)
+      const {password, ...more} = user._doc
+      res.status(200).json(more)
+     
+      } catch (err) {
+        res.status(500).json(err);
+      }
+  
+  
+  
+});
+
 module.exports = router;
