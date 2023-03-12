@@ -1,28 +1,17 @@
-const Users = require("../models/user.model");
-const jwt = require("jsonwebtoken");
+const userModel = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const isAuthenticated = async (req,res,next)=>{
+    try {
+        const {token} = req.cookies;
+        if(!token){
+            return next('Please login to access the data');
+        }
+        const verify = await jwt.verify(token,process.env.SECRET_KEY);
+        req.user = await userModel.findById(verify.id);
+        next();
+    } catch (error) {
+       return next(error); 
+    }
+}
 
-const auth = async (req, res, next) => {
-  try {
-    const token = req.header("Authorization");
-
-    if (!token)
-      return res.status(400).json({
-        message: "Invalid Authentication.",
-      });
-
-    const decode = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    if (!decode)
-      return res.status(400).json({
-        message: "Invalid Authentication.",
-      });
-
-    const user = await Users.findOne({ _id: decode.id });
-
-    req.user = user;
-    next();
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-};
-
-module.exports = auth;
+module.exports = isAuthenticated;
