@@ -44,6 +44,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//GET ALL POSTS
+router.get("/", async (req, res) => {
+  const post = await Post.find();
+  if (post) {
+    return res.status(200).json(post);
+  } else {
+    return res.status(500).json(err);
+  }
+});
+
 // DELETE POST
 router.delete("/:id", async (req, res) => {});
 
