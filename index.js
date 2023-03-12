@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 //const bcrypt = require('bcrypt')
 require("dotenv").config();
 const authRoute = require("./routes/auth.route");
+const userRoute = require("./routes/user.route");
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
@@ -20,7 +21,8 @@ mongoose
   });
 
 const port = process.env.PORT || 5000;
-app.use("/api", authRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
