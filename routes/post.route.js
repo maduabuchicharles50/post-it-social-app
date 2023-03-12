@@ -17,27 +17,32 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-      try {
-        const updatedPost = await Post.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedPost)
-      } catch (err) {
-        res.status(500).json();
-      }
-    
+    try {
+      const updatedPost = await Post.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      );
+      res.status(200).json(updatedPost);
+    } catch (err) {
+      res.status(500).json();
+    }
   } catch (err) {
     res.status(500).json();
   }
 });
 
 // GET A SINGLE POST
-router.get("/:id", async (req, res) => {});
-
+router.get("/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // DELETE POST
 router.delete("/:id", async (req, res) => {});
