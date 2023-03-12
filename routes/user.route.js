@@ -18,7 +18,7 @@ router.patch("/:id", async (req, res) => {
         },
         { new: true }
       );
-      res.status(200).json("User Updated successfully");
+      res.status(200).json(updatedUser);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -43,23 +43,30 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json("user not Found");
     }
   } else {
-    res.status(401).json("delete your account");
+    res.status(401).json("delete account");
+  }
+});
+
+//GET ALL USERS
+router.get("/", async (req, res) => {
+  const user = await User.find();
+  if (user) {
+    console.log(user);
+    return res.status(200).json(user);
+  } else {
+    return res.status(500).json(err);
   }
 });
 
 // GET A SINGLE USER
 router.get("/:id", async (req, res) => {
-    try {
-      const user = await User.findById(req.params.id)
-      const {password, ...more} = user._doc
-      res.status(200).json(more)
-     
-      } catch (err) {
-        res.status(500).json(err);
-      }
-  
-  
-  
+  try {
+    const user = await User.findById(req.params.id);
+    const { password, ...more } = user._doc;
+    res.status(200).json(more);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
