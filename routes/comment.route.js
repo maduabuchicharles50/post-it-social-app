@@ -14,4 +14,26 @@ router.post("/", async (req, res) => {
   res.status(200).json(result);
 });
 
+// GET SINGLE COMMENT
+router.get("/:id", async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.id);
+    const { pssword, ...more } = comment._doc;
+    res.status(200).json(more);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// // //GET ALL USERS
+// // router.get("/", async (req, res) => {
+// //   const comment = await Comment.find();
+// //   if (comment) {
+// //     //console.log(user);
+// //     return res.status(200).jsoncommen);
+// //   } else {
+// //     return res.status(500).json(err);
+// //   }
+// });
+
 module.exports = router;
