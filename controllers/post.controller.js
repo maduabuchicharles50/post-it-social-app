@@ -6,8 +6,8 @@ class PostController{
     async addPost(req, res){
         const body = req.body
 
-        // Check if a book of that title already exist
-        // If not create the book
+        // Check if a post of that title already exist
+        // If not create the post
         const existingPost = await postService.getPost({title: body.title.toLowerCase()})
         if(existingPost) return res.status(403).json({
             success: false,
@@ -29,7 +29,7 @@ class PostController{
         const updateData = req.body
         const postId = req.params.id
 
-        // Fetch the book with the id
+        // Fetch the post with the id
         const existingPost = await postService.getPost({_id: postId})
         if(!existingPost) return res.status(404).json({
             success: false,

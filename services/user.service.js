@@ -3,29 +3,29 @@ const userModel = require('../models/user.model')
 
 class UserService{
 
-    // Add book
+    // Add user
     async addUser(data){
         return await userModel.create(data)
     }
 
-    // Update a book 
+    // Update a user
     async updateUser(id, updateData){
         return await userModel.findByIdAndUpdate(id, updateData, {
             new: true
         })
     }
 
-    // Delete a book 
+    // Delete a user 
     async deleteUser(id){
         return await userModel.findByIdAndUpdate(id, {deleted: true})
     }
 
-    // Get a single book
+    // Get a single user
     async getUser(filter){
         return await userModel.findOne(filter)
     }
 
-    // Get all books 
+    // Get all users
     async getUsers(filter){
         return await userModel.find(filter)
     }
