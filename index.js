@@ -5,6 +5,7 @@ require("dotenv").config();
 const authRoute = require("./routes/auth.route");
 const userRoute = require("./routes/user.route");
 const postRoute = require("./routes/post.route");
+const commentRoute = require("./routes/comment.route");
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
@@ -25,6 +26,7 @@ const port = process.env.PORT || 5000;
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/comments", commentRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
