@@ -37,26 +37,23 @@ router.get("/", async (req, res) => {
 });
 
 // UPDATE COMMENT
-router.patch("/:id", async (req, res) => {
-  if (req.body.userId === req.params.id) {
-    if (req.body.password) {
-      const salt = await bcrypt.genSalt(10);
-      req.body.password = await bcrypt.hash(req.body.password, salt);
-    }
+router.put("/:id", async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.params.id);
     try {
-      const updatedUser = await User.findByIdAndUpdate(
+      const updatedComment = await Comment.findByIdAndUpdate(
         req.params.id,
         {
           $set: req.body,
         },
         { new: true }
       );
-      res.status(200).json(updatedUser);
+      res.status(200).json(updatedComment);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json();
     }
-  } else {
-    res.status(401).json("update your account to continue");
+  } catch (err) {
+    res.status(500).json();
   }
 });
 
