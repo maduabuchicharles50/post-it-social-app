@@ -1,14 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-//const rootRoute = require("./routers/indexRoute");
+const rootRoute = require("./routes/index.route");
 require("dotenv").config();
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//app.use("/api/v1", rootRoute);
-//mongoose.set('strictQuery')
+app.use("/api/v1", rootRoute);
 
 mongoose
   .connect(process.env.MONGODB_URI)
