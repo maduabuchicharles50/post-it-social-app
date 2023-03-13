@@ -4,7 +4,7 @@ class UserController {
   async addUser(req, res) {
     const body = req.body;
 
-    // Check if a book of that title already exist
+    // Check if a user of that title already exist
 
     const existingUser = await userService.getUser({
       username: body.title.toLowerCase(),
@@ -28,7 +28,7 @@ class UserController {
     const updateData = req.body;
     const userId = req.params.id;
 
-    // Fetch the book with the id
+    // Fetch the user with the id
     const existingUser = await userService.getUser({ _id: userId });
     if (!existingUser)
       return res.status(404).json({

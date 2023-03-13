@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const postController = require('../controllers/post.controller')
+const ensureAuthenticated = require("../middlewares/auth.middleware")
 
-router.post('/',  postController.addPost)
-router.get('/:id', postController.fetchPost)
-router.patch('/:id', postController.editPost)
-router.get('/', postController.fetchPosts)
-router.delete('/:id', postController.deletePost)
+
+router.post('/',ensureAuthenticated,  postController.addPost)
+router.get('/:id',ensureAuthenticated, postController.fetchPost)
+router.patch('/:id',ensureAuthenticated, postController.editPost)
+router.get('/',ensureAuthenticated, postController.fetchPosts)
+router.delete('/:id',ensureAuthenticated, postController.deletePost)
 
 module.exports = router

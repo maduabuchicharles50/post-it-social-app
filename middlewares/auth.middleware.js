@@ -1,6 +1,6 @@
 
 const moment = require('moment');
-const jwt = require('jwt-simple');
+const jwt = require("jsonwebtoken");
 const User = require('../models/user.model');
 
 // 2. Authentication Middleware
@@ -19,18 +19,16 @@ async function ensureAuthenticated(req, res, next) {
     return res.status(401).send({ error: "TokenInvalid" });
   }
 
-  if (payload.exp <= moment().unix()) {
-    return res.status(401).send({ error: 'TokenExpired' });
-  }
+  // if (payload.exp <= moment().unix()) {
+  //   return res.status(401).send({ error: 'TokenExpired' });
+  // }
   // check if the user exists
-  await User.findById(payload.sub, function(err, user){
-    if (!user){
-      return res.status(401).send({error: 'PersonNotFound'});
-    } else {
-      req.user = payload.sub;
+
+
+      req.user = payload;
       next();
-    }
-  });
+
+  
 };
 
 module.exports = ensureAuthenticated
