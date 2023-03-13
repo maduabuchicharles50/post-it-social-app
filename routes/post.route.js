@@ -12,6 +12,16 @@ router.post("/", async (req, res) => {
     res.status(500).json("err");
   }
 });
+// router.post("/", async (req, res) => {
+//   const post = new Post({
+//     title: req.body.title,
+//     desc: req.body.desc,
+//     username: req.body.username,
+//     id: req.body.id
+//   });
+//   const result = await post.save();
+//   res.status(200).json(result);
+// });
 
 //UPDATE POST
 router.put("/:id", async (req, res) => {
@@ -54,28 +64,18 @@ router.get("/", async (req, res) => {
   }
 });
 
-// DELETE POST  postRoute/delete
+// delete post
 router.delete("/:id", async (req, res) => {
-  
-    const post = await Post.findByIdAndUpdate(
-      req.params.Id,
-      { new: true }
-    );
-
-    if (!post) {
-      return res.status(400).send("Post not found");
-    // const post = await Post.findById(req.params.id);
-    // if (post.username === req.body.username) {
-    //   try {
-    //     await post.delete();
-    //     res.status(200).json("post deleted");
-    //   } catch (err) {
-    //     res.status(500).json(err);
-    //   }
-    // } else {
-    //   res.status(401).json("delete only your post");
-    // }
+  try {
+    const post = await Post.findById(req.params.id);
+    try {
+      const deletedPost = await Post.findByIdAndDelete(req.params.id);
+      res.status(200).json("deleted");
+    } catch (err) {
+      res.status(500).json(err);
     }
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
-
 module.exports = router;
